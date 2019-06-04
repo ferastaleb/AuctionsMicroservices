@@ -1,0 +1,66 @@
+﻿@model Auctions.Monolithic.Models.Outbid
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<h4>Outbid</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="#">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Outbid" class="btn btn-primary submit-outbid" />
+                <span class="result-span"></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var bidId = "005AAAA1-1B6A-4A2B-A6F7-3FD5C85CD43E";
+        var postUrl = '/api/outbids';
+
+        $('.submit-outbid').click(function (e) {
+            e.preventDefault();
+
+            var amount = $('#Amount').val();
+
+            $('.result-span').html('loading ...');
+            $.ajax(
+                {
+                    url: postUrl,
+                    type: 'POST',
+                    //dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        Amount: amount,
+                        BidId: bidId
+                    }),
+                    success: function (data) {
+                        $('.result-span').html('Success! :)');
+                    },
+                    error: function (data) {
+                        $('.result-span').html('Error! :( <br/> ' + data.responseText);
+                    }
+                });
+        });
+
+    });
+</script>
+}

@@ -4,12 +4,19 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using AuctionsService.Models;
+using Auctions.Monolithic.Models;
+using Auctions.Monolithic.Data;
+using Microsoft.EntityFrameworkCore;
 
-namespace AuctionsService.Controllers
+namespace Auctions.Monolithic.Controllers
 {
     public class HomeController : Controller
     {
+        public HomeController()
+        {
+            
+        }
+
         public IActionResult Index()
         {
             return View();
