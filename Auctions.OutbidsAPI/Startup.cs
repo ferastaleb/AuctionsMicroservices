@@ -20,7 +20,7 @@ namespace Auctions.OutbidsAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IMessagingBrokerSender<Message>, AzureServiceBusQueue>((serviceProvider) =>
+            services.AddSingleton<IMessagingBrokerSender<Message>, AzureServiceBusQueue>((serviceProvider) =>
             {
                 var cn = Configuration.GetSection("AuctionsAzureServiceBusQueue").GetValue<string>("ConnectionString");
                 var queueName = Configuration.GetSection("AuctionsAzureServiceBusQueue").GetValue<string>("QueueName");

@@ -10,16 +10,19 @@ namespace Auctions.OutbidsAPI.MessagingBroker
     public class AzureServiceBusQueue : IMessagingBrokerSender<Message>
     {
         private readonly MessageSender sender;
+        private readonly QueueClient queueClient;
 
         public AzureServiceBusQueue(string connectionString, string entityPath)
         {
             sender = new MessageSender(connectionString, entityPath, RetryPolicy.Default);
+            //queueClient = new QueueClient()
         }
 
         public async Task SendAsync(Message message)
         {
             await sender.SendAsync(message);
-            await sender.CloseAsync();
+            //await queueClient.SendAsync(message);
+            //await sender.CloseAsync();
         }
     }
 }

@@ -33,7 +33,8 @@ namespace Auctions.AuctionParticipantClient
                 };
                 try
                 {
-                    var response = await client.PostAsync("https://localhost:5001/api/outbid",
+                    var response = await client.PostAsync("https://outbids-api.azurewebsites.net/api/outbid",
+                                                        //"https://localhost:5001/api/outbid",
                                                           new StringContent(JsonConvert.SerializeObject(outbid), Encoding.UTF8,"application/json"));
 
                     Console.WriteLine($"Response: {await response.Content.ReadAsStringAsync()}");

@@ -32,8 +32,8 @@ namespace Auctions.OutbidsAPI.Controllers
                 {
                     var message = new Message(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(outBidModel)))
                     {
-                        MessageId = $"{outBidModel.BidId}-{outBidModel.Amount}",
-                        SessionId = outBidModel.BidId.ToString()
+                        MessageId = Guid.NewGuid().ToString(), //$"{outBidModel.BidId}-{outBidModel.Amount}",
+                        //SessionId = outBidModel.BidId.ToString()
                     };
                     await _messagingBrokerSender.SendAsync(message);
                     return Ok();

@@ -12,7 +12,7 @@ namespace OutbidsWorker
     public static class OutbidsWorker
     {
         [FunctionName("OutbidsWorker")]
-        public static async Task Run([ServiceBusTrigger("outbids", Connection = "Outbids_Queue", IsSessionsEnabled = true)]Message myQueueItem, ILogger log)
+        public static async Task Run([ServiceBusTrigger("outbids", Connection = "Outbids_Queue")]Message myQueueItem, ILogger log)
         {
             var body = Encoding.UTF8.GetString(myQueueItem.Body);
             log.LogInformation($"C# ServiceBus queue trigger function processed message: {body}");
@@ -31,8 +31,8 @@ namespace OutbidsWorker
                     log.LogInformation($"isExists value : {isExists}- For BidId:{outbid.BidId}");
                 }
 
-                if (isExists)
-                    return;
+                //if (isExists)
+                //    return;
                 outbid.Id = Guid.NewGuid();
                 var insertText = "INSERT INTO OUTBIDS(Id,BidId,Amount) VALUES(@Id,@BidId,@Amount);";
                 using(SqlCommand cmdInsert = new SqlCommand(insertText, conn))
